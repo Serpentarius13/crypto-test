@@ -11,5 +11,10 @@ export const buttonVariants = cva(
         medium: "text-small font-bold py-[1.5rem] px-[5.9rem]",
       },
     },
+
+    defaultVariants: {
+      variant: "blue",
+      size: "medium",
+    },
   }
 );

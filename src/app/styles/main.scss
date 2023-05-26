@@ -6,9 +6,13 @@
 
 @import "./tailwind/components.scss", "./tailwind/base.scss";
 
+@import "./utilities/animations.scss";
+
 body {
   width: 100vw;
   min-height: 100vh;
+
+  @apply text-small text-black;
 }
 
 html {

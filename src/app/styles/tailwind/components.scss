@@ -1,5 +1,17 @@
 @layer components {
-    .text-small {
-        @apply text-[1.6rem] leading-[23px]
-    }
+  .text-small {
+    @apply text-[1.6rem] leading-[23px];
+  }
+
+  .heading-big {
+    @apply text-[5rem] leading-[6rem] md:text-[4rem] md:leading-[4.8rem];
+  }
+
+  .text-big {
+    @apply text-[2rem] leading-[2rem];
+  }
+
+  .container {
+    @apply max-w-[96rem] w-full mx-auto;
+  }
 }

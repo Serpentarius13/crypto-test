@@ -1,5 +1,5 @@
 <template>
-  <label class="flex flex-col gap-[8rem] text-small">
+  <label class="flex flex-col gap-[8rem]">
     <span> {{ label }} </span>
     <input
       v-model="model"
