@@ -1,0 +1,17 @@
+@tailwind components;
+@tailwind base;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Vollkorn:wght@400;700&display=swap");
+
+@import "./tailwind/components.scss", "./tailwind/base.scss";
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Vollkorn", serif;
+}
