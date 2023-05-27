@@ -195,8 +195,15 @@ export const useExchangerStore = defineStore("exchanger-store", {
           right.currency
         );
 
+        // Получаем минималку справа налево
+        const minAmountRight = await getMinimalAmount(
+          right.currency,
+          left.currency
+        );
+
         // Обновляем минималки
         this.minimalAmount.fromLeft = minAmountLeft;
+        this.minimalAmount.fromRight = minAmountRight;
 
         this.unload();
       } catch (error: Error | any) {
