@@ -1,4 +1,4 @@
-import { axiosV1Key } from "@/shared/api/axiosInstance";
+import { axiosV1Key } from "@/shared/api/axiosInstance/axiosInstance";
 import { ICurrency, IMinimalAmount } from "../types/currency.types";
 
 export async function getMinimalAmount(

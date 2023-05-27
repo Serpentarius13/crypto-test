@@ -5,6 +5,7 @@
       v-model="model"
       v-bind="props"
       class="w-full padding-small rounded-very-small"
+      
     />
   </label>
 </template>

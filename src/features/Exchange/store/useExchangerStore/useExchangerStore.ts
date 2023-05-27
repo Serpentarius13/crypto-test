@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import { ICurrency, IEstimatedAmount } from "../types/currency.types";
-import { getAllCurrencies } from "../api/getAllCurrencies";
+import { ICurrency, IEstimatedAmount } from "../../types/currency.types";
+import { getAllCurrencies } from "../../api/getAllCurrencies";
 import { pickFields } from "@/shared/utils/pickFields/pickFields";
 import { checkInclusiveStrings } from "@/shared/utils/checkInclusiveStrings/checkInclusiveStrings";
-import { getMinimalAmount } from "../api/getMinimalAmount";
-import { getEstimatedAmount } from "../api/getEstimatedAmount";
+import { getMinimalAmount } from "../../api/getMinimalAmount";
+import { getEstimatedAmount } from "../../api/getEstimatedAmount";
 import { debounce } from "@/shared/utils/debounce/debounce";
 
 export interface ISelectedCurrency {
@@ -23,8 +23,6 @@ interface IExchangerStore {
   isLoading: boolean;
   warning: IEstimatedAmount["warningMessage"];
 }
-
-type TSide = "left" | "right";
 
 export const useExchangerStore = defineStore("exchanger-store", {
   state: (): IExchangerStore => ({
@@ -83,6 +81,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
         );
       }
       if (this.leftCurrency.currency) {
+       
         this.getMinimal().then(() => {
           this.leftCurrency.value && this.getEstimateLeft();
         });
@@ -210,7 +209,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
     isMinimalBreached(state): boolean {
       if (this.warning) return true;
 
-      console.log(state.leftCurrency.value, state.minimalAmount.fromLeft);
+    
       const isLeftBreaches =
         this.leftFloat < state.minimalAmount.fromLeft &&
         state.leftCurrency.value !== "";

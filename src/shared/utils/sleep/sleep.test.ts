@@ -1,4 +1,3 @@
-import { describe, expect, it, beforeEach } from "vitest";
 import { sleep } from "./sleep";
 
 describe("env with error", () => {

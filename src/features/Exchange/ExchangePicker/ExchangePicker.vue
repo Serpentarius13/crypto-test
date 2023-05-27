@@ -36,7 +36,7 @@ import CurrencyLogo from "@/shared/ui/CurrencyLogo/CurrencyLogo.vue";
 import { ref } from "vue";
 
 import ExchangePickerSelect from "./ExchangePickerSelect.vue";
-import { ISelectedCurrency } from "../store/useExchangerStore";
+import { ISelectedCurrency } from "../store/useExchangerStore/useExchangerStore.js";
 
 interface IExchangePicker {
   selectedCurrency: ISelectedCurrency;

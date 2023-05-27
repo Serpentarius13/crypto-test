@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { importEnvWithError } from "../utils/importEnvWithError/importEnvWithError";
+import { importEnvWithError } from "../../utils/importEnvWithError/importEnvWithError";
 import { useToast } from "vue-toastification";
 
 interface ICreator {
@@ -7,7 +7,7 @@ interface ICreator {
   hasApiKey: boolean;
 }
 
-function createAxiosInstance({
+export function createAxiosInstance({
   isV2 = true,
   hasApiKey = true,
 }: Partial<ICreator>): AxiosInstance {

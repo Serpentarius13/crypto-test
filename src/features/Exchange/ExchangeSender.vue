@@ -20,7 +20,7 @@
 import BaseButton from "@/shared/ui/Button/BaseButton.vue";
 import TextInput from "@/shared/ui/Input/TextInput.vue";
 import { ref } from "vue";
-import { useExchangerStore } from "./store/useExchangerStore";
+import { useExchangerStore } from "./store/useExchangerStore/useExchangerStore.js";
 
 const address = ref<string>("");
 
