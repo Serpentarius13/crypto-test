@@ -1,9 +1,10 @@
-import { axiosV1Key } from "@/shared/api/axiosInstance/axiosInstance";
+
 
 import { ICurrency } from "../../../features/Exchange/types/currency.types";
+import { instance } from "./axiosCurrencyInstance";
 
 export async function getAllCurrencies() {
-  const { data } = await axiosV1Key.get<ICurrency[]>("/currencies?active=true").catch();
+  const { data } = await instance.get<ICurrency[]>("/currencies?active=true").catch();
 
   return data;
 }

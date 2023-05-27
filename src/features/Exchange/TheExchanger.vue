@@ -25,7 +25,6 @@ import ExchangePicker from "@/features/Exchange/ExchangePicker/ExchangePicker.vu
 import ExchangePickerBtn from "@/features/Exchange/ExchangePicker/ExchangePickerBtn.vue";
 import { useExchangerStore } from "./store/useExchangerStore/useExchangerStore.js";
 import { onMounted } from "vue";
-import { debounce } from "@/shared/utils/debounce/debounce";
 
 const store = useExchangerStore();
 

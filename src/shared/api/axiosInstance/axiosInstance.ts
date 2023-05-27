@@ -5,11 +5,13 @@ import { useToast } from "vue-toastification";
 interface ICreator {
   isV2: boolean;
   hasApiKey: boolean;
+  disabledErrors: string[];
 }
 
 export function createAxiosInstance({
   isV2 = true,
   hasApiKey = true,
+  disabledErrors = [],
 }: Partial<ICreator>): AxiosInstance {
   const baseURL = importEnvWithError("VITE_BASE_URL");
 
@@ -33,8 +35,14 @@ export function createAxiosInstance({
       return resp;
     },
     (err) => {
-      const toast = useToast();
-      toast.error(err.message);
+      const errorMsg = err.response.data?.error;
+
+  
+      if (!disabledErrors.includes(errorMsg)) {
+        const toast = useToast();
+        toast.error(errorMsg);
+      }
+
       return Promise.reject(err);
     }
   );
@@ -43,4 +51,6 @@ export function createAxiosInstance({
 }
 
 export const axiosV2Key = createAxiosInstance({});
-export const axiosV1Key = createAxiosInstance({ isV2: false });
+export const axiosV1Key = createAxiosInstance({
+  isV2: false,
+});

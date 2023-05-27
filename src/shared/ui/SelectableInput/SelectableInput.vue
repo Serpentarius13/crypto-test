@@ -29,11 +29,9 @@
       <BaseIcon name="arrow-down" v-show="!isOpened" key="2" id="arrow" />
     </button>
 
-    <Transition name="fade">
-      <div class="absolute left-0 top-full w-full" v-if="isOpened">
-        <slot name="menu" />
-      </div>
-    </Transition>
+    <div class="absolute left-0 top-full w-full" v-if="isOpened">
+      <slot name="menu" />
+    </div>
   </div>
 </template>
 
@@ -60,12 +58,12 @@ function handleClose(e: KeyboardEvent) {
 }
 
 function handleInputEvent(e: Event) {
-  const debounced = debounce(
-    () => emit("input", (e.target as HTMLInputElement).value),
-    500
-  );
-  debounced();
+  debouncedEmit((e.target as HTMLInputElement).value);
 }
+
+const debouncedEmit = debounce((v: string) => {
+  emit("input", v);
+}, 300);
 
 onMounted(() => {
   document.addEventListener("keydown", handleClose);
