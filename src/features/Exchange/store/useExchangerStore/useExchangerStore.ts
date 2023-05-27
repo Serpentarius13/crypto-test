@@ -142,10 +142,8 @@ export const useExchangerStore = defineStore("exchanger-store", {
       // Если значение равняется пустой строек либо нулю, обнуляем также значение другого инпута и возвращаем
       if (value === "" || value === "0") return (this.rightCurrency.value = "");
 
-      // Если нет, обновляем эстимейт с помощью дебаунса
-      const getEstimateRight = debounce(this.getEstimateRight, 500);
-
-      if (+value > this.minimalAmount.fromLeft) getEstimateRight();
+      // Гетаем эстимейт
+      if (+value > this.minimalAmount.fromLeft) this.getEstimateRight();
     },
 
     /**
@@ -163,10 +161,8 @@ export const useExchangerStore = defineStore("exchanger-store", {
       // Если значение равняется пустой строек либо нулю, обнуляем также значение другого инпута и возвращаем
       if (value === "" || value === "0") return (this.leftCurrency.value = "");
 
-      // Если нет, обновляем эстимейт с помощью дебаунса
-      const getEstimateLeft = debounce(this.getEstimateLeft, 500);
-
-      if (+value > this.minimalAmount.fromRight) getEstimateLeft();
+      // Гетаем эстимейт
+      if (+value > this.minimalAmount.fromRight) this.getEstimateLeft();
     },
 
     /**

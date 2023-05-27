@@ -1,5 +1,7 @@
 <template>
-  <div class="flex w-full gap-[3.3rem] lg:gap-[1.4rem] md:flex-col md:items-end">
+  <div
+    class="flex w-full gap-[3.3rem] lg:gap-[1.4rem] md:flex-col md:items-end"
+  >
     <ExchangePicker
       :selectedCurrency="store.leftCurrency"
       :handleSelectCurrency="store.setLeftCurrency"
@@ -23,6 +25,7 @@ import ExchangePicker from "@/features/Exchange/ExchangePicker/ExchangePicker.vu
 import ExchangePickerBtn from "@/features/Exchange/ExchangePicker/ExchangePickerBtn.vue";
 import { useExchangerStore } from "./store/useExchangerStore/useExchangerStore.js";
 import { onMounted } from "vue";
+import { debounce } from "@/shared/utils/debounce/debounce";
 
 const store = useExchangerStore();
 

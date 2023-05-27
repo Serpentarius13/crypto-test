@@ -67,6 +67,8 @@ describe("selectable input", () => {
 
     await valueInput.setValue("123");
 
+    await new Promise((r) => setTimeout(r, 600));
+
     expect(valueSpan.text()).toBe("123");
 
     // Opener

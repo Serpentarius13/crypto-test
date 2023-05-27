@@ -5,7 +5,7 @@
   >
     <input
       class="numeric border-r-[1px] border-r-white-gray focus:outline-none"
-      @input="e => emit('input', (e.target as HTMLInputElement).value)"
+      @input="handleInputEvent"
       :value="value"
       v-if="!isOpened"
       type="number"
@@ -41,6 +41,7 @@
 import { sleep } from "@/shared/utils/sleep/sleep.js";
 import BaseIcon from "../Icon/BaseIcon.vue";
 import { onMounted, onUnmounted } from "vue";
+import { debounce } from "@/shared/utils/debounce/debounce";
 
 const props = defineProps<{ isOpened: boolean; value: string }>();
 
@@ -56,6 +57,14 @@ function handleClose(e: KeyboardEvent) {
   if (e.key === "Enter" || e.key === "") {
     handleClickAway();
   }
+}
+
+function handleInputEvent(e: Event) {
+  const debounced = debounce(
+    () => emit("input", (e.target as HTMLInputElement).value),
+    500
+  );
+  debounced();
 }
 
 onMounted(() => {

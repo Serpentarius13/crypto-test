@@ -1,4 +1,3 @@
-
 import { debounce } from "./debounce";
 
 describe("debounce", () => {
@@ -10,6 +9,8 @@ describe("debounce", () => {
     const debouncedFn = debounce(fn, 1000);
 
     debouncedFn();
+
+    await new Promise((r) => setTimeout(r, 1100));
 
     expect(str).toBe("1");
 
