@@ -1,10 +1,11 @@
 <template>
-  <div class="h-[14.4rem] overflow-y-auto" v-bind="containerProps">
+  <div class="h-[14.4rem] overflow-y-auto z-[20] relative" v-bind="containerProps">
     <ul class="z-[20] flex w-full flex-col" v-bind="wrapperProps">
       <li v-for="{ data, index } in list" :key="index">
         <button
           @click="emit('select', data)"
           class="padding-small flex w-full items-center gap-[1.2rem] bg-white hover:bg-white-grayish"
+          :style="{ height: '4.8rem' }"
         >
           <CurrencyLogo
             :name="data.name"
@@ -37,18 +38,11 @@ const currencies = computed<ICurrency[]>(() => {
     checkInclusiveStrings(props.searchValue, [c.name, c.ticker])
   );
 
-  console.log(incl);
-
   return incl;
 });
 
 const { list, wrapperProps, containerProps } = useVirtualList(currencies, {
   itemHeight: 48,
-});
-
-watchEffect(() => {
-  console.log(props.currencies);
-  console.log(list.value);
 });
 </script>
 

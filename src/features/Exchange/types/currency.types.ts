@@ -12,3 +12,13 @@ export interface IFullCurrency {
 
 export interface ICurrency
   extends Pick<IFullCurrency, "ticker" | "name" | "image"> {}
+
+export interface IEstimatedAmount {
+  estimatedAmount: number;
+  transactionSpeedForecast: string;
+  warningMessage: null | string;
+}
+
+export interface IMinimalAmount {
+  minAmount: number;
+}

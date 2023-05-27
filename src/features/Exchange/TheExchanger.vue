@@ -1,17 +1,19 @@
 <template>
   <div class="flex w-full gap-[3.3rem]">
     <ExchangePicker
-      :selectedCurrency="store.leftCurrency.currency"
+      :selectedCurrency="store.leftCurrency"
       :handleSelectCurrency="store.setLeftCurrency"
       :currencies="store.rightCurrencies"
+      :handleInput="store.handleUpdateLeftCurrency"
     />
 
-    <ExchangePickerBtn />
+    <ExchangePickerBtn @click="store.switchCurrencies" />
 
     <ExchangePicker
-      :selectedCurrency="store.rightCurrency.currency"
+      :selectedCurrency="store.rightCurrency"
       :handleSelectCurrency="store.setRightCurrency"
       :currencies="store.leftCurrencies"
+      :handleInput="store.handleUpdateRightCurrency"
     />
   </div>
 </template>

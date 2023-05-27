@@ -5,11 +5,12 @@
   >
     <input
       class="border-r-[1px] border-r-white-gray focus:outline-none"
-      v-model="valueModel"
+      @input="e => emit('input', (e.target as HTMLInputElement).value)"
+      :value="value"
       v-if="!isOpened"
     />
     <input
-      class="focus:outline-none w-full"
+      class="w-full focus:outline-none"
       type="search"
       v-model="searchModel"
       v-else
@@ -37,13 +38,11 @@
 import { sleep } from "@/shared/utils/sleep";
 import Icon from "../Icon/Icon.vue";
 
-const props = defineProps<{ isOpened: boolean }>();
-
-const valueModel = defineModel<string>("value", { required: true });
+const props = defineProps<{ isOpened: boolean; value: string }>();
 
 const searchModel = defineModel<string>("search", { required: true });
 
-const emit = defineEmits<{ open: [] }>();
+const emit = defineEmits<{ open: []; input: [value: string] }>();
 
 function handleClickAway() {
   sleep(1).then(() => props.isOpened && emit("open"));

@@ -1,15 +1,16 @@
 <template>
   <SelectableInput
-    v-model:value="value"
     v-model:search="searchValue"
     @open="isSelectOpened = !isSelectOpened"
+    @input="handleInput"
+    :value="selectedCurrency.value"
     :is-opened="isSelectOpened"
   >
     <template #button>
       <CurrencyLogo
-        :name="selectedCurrency.name"
-        :image="selectedCurrency.image"
-        :ticker="selectedCurrency.ticker"
+        :name="selectedCurrency.currency?.name"
+        :image="selectedCurrency.currency?.image"
+        :ticker="selectedCurrency.currency?.ticker"
         v-if="selectedCurrency"
       />
     </template>
@@ -17,7 +18,9 @@
     <template #menu>
       <ExchangePickerSelect
         :currencies="
-          currencies.filter((c) => c.ticker !== selectedCurrency.ticker)
+          currencies.filter(
+            (c) => c.ticker !== selectedCurrency.currency?.ticker
+          )
         "
         @select="handleSelect"
         :search-value="searchValue"
@@ -32,24 +35,22 @@ import { ICurrency } from "../types/currency.types";
 import CurrencyLogo from "@/shared/ui/CurrencyLogo/CurrencyLogo.vue";
 import { ref } from "vue";
 
-import { useExchangerStore } from "../store/useExchangerStore";
 import ExchangePickerSelect from "./ExchangePickerSelect.vue";
+import { ISelectedCurrency } from "../store/useExchangerStore";
 
 interface IExchangePicker {
-  selectedCurrency: ICurrency;
+  selectedCurrency: ISelectedCurrency;
   handleSelectCurrency: (currency: ICurrency) => void;
   currencies: ICurrency[];
+  handleInput: (value: string) => void;
 }
 
 const isSelectOpened = ref<boolean>(false);
 
-const value = ref<string>("");
 const searchValue = ref<string>("");
 
 const { selectedCurrency, handleSelectCurrency } =
   defineProps<IExchangePicker>();
-
-const store = useExchangerStore();
 
 function handleSelect(currency: ICurrency) {
   isSelectOpened.value = false;
