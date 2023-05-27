@@ -8,10 +8,10 @@
   >
     <template #button>
       <CurrencyLogo
-        :name="selectedCurrency.currency?.name"
-        :image="selectedCurrency.currency?.image"
-        :ticker="selectedCurrency.currency?.ticker"
-        v-if="selectedCurrency"
+        :name="selectedCurrency.currency.name"
+        :image="selectedCurrency.currency.image"
+        :ticker="selectedCurrency.currency.ticker"
+        v-if="selectedCurrency.currency"
       />
     </template>
 

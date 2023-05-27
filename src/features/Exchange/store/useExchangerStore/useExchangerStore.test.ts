@@ -118,14 +118,14 @@ const pickedArray = currencies.map((c) =>
 export const restHandlers = [
   rest.get(
     "https://api.changenow.io/v1/currencies?active=true&fixedRate=true",
-    (req, res, ctx) => {
+    (_, res, ctx) => {
       return res(ctx.status(200), ctx.json(currencies));
     }
   ),
 
   rest.get(
     `https://api.changenow.io/v1/exchange-amount/1/btc_eth/?api_key=52da871cb5197290b2309005563be0685100b33fe986056fd1177899d7c814cb}`,
-    (req, res, ctx) => {
+    (_, res, ctx) => {
       return res(
         ctx.status(200),
         ctx.json({
@@ -138,7 +138,7 @@ export const restHandlers = [
 
   rest.get(
     `https://api.changenow.io/v1/min-amount/btc_eth?api_key=52da871cb5197290b2309005563be0685100b33fe986056fd1177899d7c814cb`,
-    (req, res, ctx) => {
+    (_, res, ctx) => {
       return res(
         ctx.status(200),
         ctx.json({
@@ -150,7 +150,7 @@ export const restHandlers = [
 
   rest.get(
     `https://api.changenow.io/v1/min-amount/eth_btc?api_key=52da871cb5197290b2309005563be0685100b33fe986056fd1177899d7c814cb`,
-    (req, res, ctx) => {
+    (_, res, ctx) => {
       return res(
         ctx.status(200),
         ctx.json({
