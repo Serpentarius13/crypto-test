@@ -12,6 +12,6 @@
   }
 
   .container {
-    @apply max-w-[96rem] w-full mx-auto;
+    @apply max-w-[96rem] w-full mx-auto lg:px-[1.6rem];
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full gap-[3.3rem]">
+  <div class="flex w-full gap-[3.3rem] lg:gap-[1.4rem] md:flex-col md:items-end">
     <ExchangePicker
       :selectedCurrency="store.leftCurrency"
       :handleSelectCurrency="store.setLeftCurrency"

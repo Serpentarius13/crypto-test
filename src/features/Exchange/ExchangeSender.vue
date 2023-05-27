@@ -1,9 +1,9 @@
 <template>
-  <div class="flex w-full items-end gap-[3.2rem]">
+  <div class="flex w-full items-end gap-[3.2rem] sm:flex-col sm:items-stretch">
     <TextInput v-model="address" label="Your Ethereum Address" />
 
     <div class="relative flex flex-col gap-[0.8rem]">
-      <BaseButton class="blue medium uppercase"> Exchange </BaseButton>
+      <BaseButton class="blue medium uppercase sm:!w-full sm:pt-[0.8rem]"> Exchange </BaseButton>
       <Transition name="fade">
         <strong
           class="text-small absolute top-full text-center text-red w-full"
