@@ -3,10 +3,15 @@
     <TextInput v-model="address" label="Your Ethereum Address" />
 
     <div class="relative flex flex-col gap-[0.8rem]">
-      <BaseButton class="blue medium uppercase sm:!w-full sm:pt-[0.8rem]"> Exchange </BaseButton>
+      <BaseButton
+        class="blue medium uppercase sm:!w-full sm:pt-[0.8rem]"
+        :disabled="store.isMinimalBreached"
+      >
+        Exchange
+      </BaseButton>
       <Transition name="fade">
         <strong
-          class="text-small absolute top-full text-center text-red w-full"
+          class="text-small absolute top-full w-full text-center text-red"
           v-if="store.isMinimalBreached"
         >
           This pair is disabled now
@@ -20,7 +25,7 @@
 import BaseButton from "@/shared/ui/Button/BaseButton.vue";
 import TextInput from "@/shared/ui/Input/TextInput.vue";
 import { ref } from "vue";
-import { useExchangerStore } from "./store/useExchangerStore/useExchangerStore.js";
+import { useExchangerStore } from "../store/useExchangerStore/useExchangerStore.js";
 
 const address = ref<string>("");
 

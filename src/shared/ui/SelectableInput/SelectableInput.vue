@@ -4,10 +4,12 @@
     v-click-away="handleClickAway"
   >
     <input
-      class="border-r-[1px] border-r-white-gray focus:outline-none"
+      class="numeric border-r-[1px] border-r-white-gray focus:outline-none"
       @input="e => emit('input', (e.target as HTMLInputElement).value)"
       :value="value"
       v-if="!isOpened"
+      type="number"
+      min="0"
     />
     <input
       class="w-full focus:outline-none"
@@ -19,11 +21,12 @@
     <button
       class="flex items-center gap-[3.3rem] justify-self-end"
       @click="emit('open')"
+      data-test="opener"
     >
       <slot name="button" />
 
-      <BaseIcon name="cross" v-show="isOpened" key="1" />
-      <BaseIcon name="arrow-down" v-show="!isOpened" key="2" />
+      <BaseIcon name="cross" v-show="isOpened" key="1" id="cross" />
+      <BaseIcon name="arrow-down" v-show="!isOpened" key="2" id="arrow" />
     </button>
 
     <Transition name="fade">
@@ -37,6 +40,7 @@
 <script setup lang="ts">
 import { sleep } from "@/shared/utils/sleep/sleep.js";
 import BaseIcon from "../Icon/BaseIcon.vue";
+import { onMounted, onUnmounted } from "vue";
 
 const props = defineProps<{ isOpened: boolean; value: string }>();
 
@@ -47,6 +51,28 @@ const emit = defineEmits<{ open: []; input: [value: string] }>();
 function handleClickAway() {
   sleep(1).then(() => props.isOpened && emit("open"));
 }
+
+function handleClose(e: KeyboardEvent) {
+  if (e.key === "Enter" || e.key === "") {
+    handleClickAway();
+  }
+}
+
+onMounted(() => {
+  document.addEventListener("keydown", handleClose);
+});
+onUnmounted(() => {
+  document.removeEventListener("keydown", handleClose);
+});
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.numeric {
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    @apply m-0 appearance-none;
+  }
+
+  @apply appearance-none;
+}
+</style>

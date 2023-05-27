@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import ExchangeSender from "@/features/Exchange/ExchangeSender.vue";
+import ExchangeSender from "@/features/Exchange/ExchangeSender/ExchangeSender.vue";
 import TheExchanger from "@/features/Exchange/TheExchanger.vue";
 </script>
 
