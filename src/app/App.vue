@@ -1,13 +1,7 @@
-<template>
-
-123
-</template>
+<template><Home /></template>
 
 <script setup lang="ts">
-
-
+import Home from "@/pages/Home.vue";
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

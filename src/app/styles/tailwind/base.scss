@@ -2,4 +2,8 @@
   .padding-small {
     @apply px-[1.6rem] py-[1.4rem];
   }
+
+  .borderline-gray {
+    @apply border-white-gray border-[1px];
+  }
 }

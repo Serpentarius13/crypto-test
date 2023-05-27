@@ -1,4 +1,4 @@
-export interface ICurrency {
+export interface IFullCurrency {
   ticker: string;
   name: string;
 
@@ -9,3 +9,6 @@ export interface ICurrency {
   isStable: boolean;
   supportsFixedRate: boolean;
 }
+
+export interface ICurrency
+  extends Pick<IFullCurrency, "ticker" | "name" | "image"> {}

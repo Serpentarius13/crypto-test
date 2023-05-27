@@ -1,14 +1,20 @@
 <template>
-  <button :class="buttonVariants({ variant, size })"><slot /></button>
+  <button class="btn text-small rounded-very-small"><slot /></button>
 </template>
 
-<script setup lang="ts">
-import { VariantProps } from "class-variance-authority";
-import { buttonVariants } from "./buttonVariants";
+<script setup lang="ts"></script>
 
-type TVariant = Required<VariantProps<typeof buttonVariants>>;
+<style scoped lang="scss">
+.btn {
+  @apply w-fit transition-all outline-none border-none focus:ring-2 focus:ring-gray-600  leading-[120%];
 
-defineProps<TVariant>();
-</script>
+  &.blue {
+    @apply bg-light-blue text-white hover:bg-blue active:bg-blue;
+    @apply disabled:bg-light-blue;
+  }
 
-<style scoped lang="scss"></style>
+  &.medium {
+    @apply font-bold py-[1.5rem] px-[5.9rem];
+  }
+}
+</style>

@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { importEnvWithError } from "../utils/importEnvWithError";
+import { useToast } from "vue-toastification";
 
 interface ICreator {
   isV2: boolean;
@@ -18,6 +19,7 @@ function createAxiosInstance({
 
   const options: AxiosRequestConfig = {
     baseURL: versionedUrl,
+    params: {},
   };
 
   if (hasApiKey) {
@@ -25,6 +27,17 @@ function createAxiosInstance({
   }
 
   const instance = axios.create(options);
+
+  instance.interceptors.response.use(
+    (resp) => {
+      return resp;
+    },
+    (err) => {
+      const toast = useToast();
+      toast.error(err.message);
+      return Promise.reject(err);
+    }
+  );
 
   return instance;
 }

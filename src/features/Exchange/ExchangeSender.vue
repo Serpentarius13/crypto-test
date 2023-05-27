@@ -1,8 +1,8 @@
 <template>
-  <div class="flex gap-[3.2rem] items-end">
+  <div class="flex gap-[3.2rem] items-end w-full">
     <TextInput v-model="address" label="Your Ethereum Address" />
 
-    <BaseButton class="uppercase"> Exchange </BaseButton>
+    <BaseButton class="uppercase blue medium"> Exchange </BaseButton>
   </div>
 </template>
 

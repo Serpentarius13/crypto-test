@@ -1,12 +1,24 @@
 <template>
-  <div class="grid grid-cols-[0.67fr_0.33fr] padding-small relative">
-    <TextInput
-      class="border-r-[1px] border-r-white-gray"
+  <div
+    class="padding-small borderline-gray relative grid w-full grid-cols-[1fr_0.33fr] rounded-very-small"
+    v-click-away="handleClickAway"
+  >
+    <input
+      class="border-r-[1px] border-r-white-gray focus:outline-none"
       v-model="valueModel"
+      v-if="!isOpened"
     />
-    <TextInput type="search" v-model="searchModel" />
+    <input
+      class="focus:outline-none w-full"
+      type="search"
+      v-model="searchModel"
+      v-else
+    />
 
-    <button class="flex gap-[3.3rem] items-center">
+    <button
+      class="flex items-center gap-[3.3rem] justify-self-end"
+      @click="emit('open')"
+    >
       <slot name="button" />
 
       <Icon name="cross" v-show="isOpened" key="1" />
@@ -14,10 +26,7 @@
     </button>
 
     <Transition name="fade">
-      <div
-        class="absolute bottom-0 w-full max-h-[14.4rem] left-0"
-        v-if="isOpened"
-      >
+      <div class="absolute left-0 top-full w-full" v-if="isOpened">
         <slot name="menu" />
       </div>
     </Transition>
@@ -25,15 +34,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { sleep } from "@/shared/utils/sleep";
 import Icon from "../Icon/Icon.vue";
-import TextInput from "../Input/TextInput.vue";
 
-const isOpened = ref<boolean>(false);
+const props = defineProps<{ isOpened: boolean }>();
 
 const valueModel = defineModel<string>("value", { required: true });
 
 const searchModel = defineModel<string>("search", { required: true });
+
+const emit = defineEmits<{ open: [] }>();
+
+function handleClickAway() {
+  sleep(1).then(() => props.isOpened && emit("open"));
+}
 </script>
 
 <style scoped lang="scss"></style>

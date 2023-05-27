@@ -1,3 +1,7 @@
 export function checkInclusiveStrings(inclusive: string, strings: string[]) {
-  return strings.map((s) => s.includes(inclusive)).every((e) => e === true);
+  const res = strings.some((s) =>
+    s.toLowerCase().includes(inclusive.toLowerCase())
+  );
+
+  return res;
 }
