@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ICurrency } from "../types/currency.types";
+import { ICurrency, IEstimatedAmount } from "../types/currency.types";
 import { getAllCurrencies } from "../api/getAllCurrencies";
 import { pickFields } from "@/shared/utils/pickFields";
 import { checkInclusiveStrings } from "@/shared/utils/checkInclusiveStrings";
@@ -21,6 +21,7 @@ interface IExchangerStore {
     fromLeft: number;
   };
   isLoading: boolean;
+  warning: IEstimatedAmount["warningMessage"];
 }
 
 type TSide = "left" | "right";
@@ -40,9 +41,11 @@ export const useExchangerStore = defineStore("exchanger-store", {
     },
 
     isLoading: false,
+    warning: null,
   }),
   actions: {
     async getCurrencies() {
+      this.load();
       const currencies = await getAllCurrencies();
 
       const strippedCurrencies = currencies.map((c) =>
@@ -52,9 +55,9 @@ export const useExchangerStore = defineStore("exchanger-store", {
       this.setLeftCurrency(strippedCurrencies[0]);
       this.setRightCurrency(strippedCurrencies[1]);
 
-      console.log(this.rightCurrency, this.leftCurrency);
-
       this.currencies = strippedCurrencies;
+
+      this.unload();
     },
 
     setLeftCurrency(currency: ICurrency) {
@@ -66,13 +69,13 @@ export const useExchangerStore = defineStore("exchanger-store", {
       }
 
       if (this.rightCurrency.currency) {
-        this.getMinimal().then(() => this.getEstimateRight());
+        this.getMinimal().then(() => {
+          this.rightCurrency.value && this.getEstimateRight();
+        });
       }
     },
     setRightCurrency(currency: ICurrency) {
       this.rightCurrency.currency = currency;
-
-      console.log(currency);
 
       if (this.leftCurrency.currency === currency) {
         this.leftCurrency.currency = this.currencies.find(
@@ -80,20 +83,32 @@ export const useExchangerStore = defineStore("exchanger-store", {
         );
       }
       if (this.leftCurrency.currency) {
-        this.getMinimal().then(() => this.getEstimateLeft());
+        this.getMinimal().then(() => {
+          this.leftCurrency.value && this.getEstimateLeft();
+        });
       }
     },
 
     handleUpdateLeftCurrency(value: string) {
+      if (typeof parseFloat(value) !== "number") return;
+
       this.leftCurrency.value = value;
-      if (value === "") return (this.rightCurrency.value = "");
+
+      if (value === "" || value === "0") return (this.rightCurrency.value = "");
+
       const getEstimateRight = debounce(this.getEstimateRight, 500);
+
       if (+value > this.minimalAmount.fromLeft) getEstimateRight();
     },
     handleUpdateRightCurrency(value: string) {
+      if (typeof parseFloat(value) !== "number") return;
+
       this.rightCurrency.value = value;
-      if (value === "") return (this.leftCurrency.value = "");
+
+      if (value === "" || value === "0") return (this.leftCurrency.value = "");
+
       const getEstimateLeft = debounce(this.getEstimateLeft, 500);
+
       if (+value > this.minimalAmount.fromRight) getEstimateLeft();
     },
 
@@ -107,6 +122,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
     },
 
     async getMinimal() {
+      this.load();
       const [left, right] = this.getCurrenciesSide();
 
       const minAmountLeft = await getMinimalAmount(
@@ -121,9 +137,12 @@ export const useExchangerStore = defineStore("exchanger-store", {
 
       this.minimalAmount.fromLeft = minAmountLeft;
       this.minimalAmount.fromRight = minAmountRight;
+
+      this.unload();
     },
 
     async getEstimateLeft() {
+      this.load();
       const [left, right] = this.getCurrenciesSide();
 
       const estimate = await getEstimatedAmount(
@@ -132,10 +151,14 @@ export const useExchangerStore = defineStore("exchanger-store", {
         left.currency
       );
 
+      this.warning = estimate.warningMessage;
+
       this.leftCurrency.value = estimate.estimatedAmount.toString();
+      this.unload();
     },
 
     async getEstimateRight() {
+      this.load();
       const [left, right] = this.getCurrenciesSide();
 
       const estimate = await getEstimatedAmount(
@@ -144,9 +167,10 @@ export const useExchangerStore = defineStore("exchanger-store", {
         right.currency
       );
 
-      console.log(estimate);
+      this.warning = estimate.warningMessage;
 
       this.rightCurrency.value = estimate.estimatedAmount.toString();
+      this.unload();
     },
 
     getCurrenciesSide() {
@@ -163,29 +187,45 @@ export const useExchangerStore = defineStore("exchanger-store", {
         Required<ISelectedCurrency>
       ];
     },
+
+    load() {
+      this.isLoading = true;
+    },
+    unload() {
+      this.isLoading = false;
+    },
   },
   getters: {
-    leftCurrencies(state) {
+    getLeftCurrencies(state) {
       return state.currencies.filter(
         (c) => c.ticker !== state.leftCurrency.currency?.ticker
       );
     },
-    rightCurrencies(state) {
+    getRightCurrencies(state) {
       return state.currencies.filter(
         (c) => c.ticker !== state.rightCurrency.currency?.ticker
       );
     },
 
     isMinimalBreached(state): boolean {
-      console.log(this.minimalAmount.fromLeft, this.minimalAmount.fromRight);
+      if (this.warning) return true;
 
+      console.log(state.leftCurrency.value, state.minimalAmount.fromLeft);
       const isLeftBreaches =
-        +state.leftCurrency.value < state.minimalAmount.fromLeft &&
+        this.leftFloat < state.minimalAmount.fromLeft &&
         state.leftCurrency.value !== "";
       const isRightBreaches =
-        +state.rightCurrency.value < state.minimalAmount.fromRight &&
+        this.rightFloat < state.minimalAmount.fromRight &&
         state.rightCurrency.value !== "";
+
       return isLeftBreaches || isRightBreaches;
+    },
+
+    leftFloat(state) {
+      return parseFloat(state.leftCurrency.value);
+    },
+    rightFloat(state) {
+      return parseFloat(state.rightCurrency.value);
     },
   },
 });

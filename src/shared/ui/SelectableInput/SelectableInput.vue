@@ -22,8 +22,8 @@
     >
       <slot name="button" />
 
-      <Icon name="cross" v-show="isOpened" key="1" />
-      <Icon name="arrow-down" v-show="!isOpened" key="2" />
+      <BaseIcon name="cross" v-show="isOpened" key="1" />
+      <BaseIcon name="arrow-down" v-show="!isOpened" key="2" />
     </button>
 
     <Transition name="fade">
@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { sleep } from "@/shared/utils/sleep";
-import Icon from "../Icon/Icon.vue";
+import BaseIcon from "../Icon/BaseIcon.vue";
 
 const props = defineProps<{ isOpened: boolean; value: string }>();
 

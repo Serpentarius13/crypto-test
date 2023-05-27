@@ -5,6 +5,7 @@ import "@/app/styles/main.scss";
 import App from "./app/App.vue";
 
 import Toast, { POSITION, PluginOptions } from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 import { createPinia } from "pinia";
 import { PiniaLogger } from "pinia-logger";

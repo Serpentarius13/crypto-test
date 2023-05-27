@@ -3,7 +3,7 @@
     <ExchangePicker
       :selectedCurrency="store.leftCurrency"
       :handleSelectCurrency="store.setLeftCurrency"
-      :currencies="store.rightCurrencies"
+      :currencies="store.getRightCurrencies"
       :handleInput="store.handleUpdateLeftCurrency"
     />
 
@@ -12,7 +12,7 @@
     <ExchangePicker
       :selectedCurrency="store.rightCurrency"
       :handleSelectCurrency="store.setRightCurrency"
-      :currencies="store.leftCurrencies"
+      :currencies="store.getLeftCurrencies"
       :handleInput="store.handleUpdateRightCurrency"
     />
   </div>

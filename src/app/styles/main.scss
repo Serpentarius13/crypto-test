@@ -12,6 +12,7 @@ body {
   width: 100vw;
   min-height: 100vh;
 
+  overflow-x: hidden;
   @apply text-small text-black;
 }
 
