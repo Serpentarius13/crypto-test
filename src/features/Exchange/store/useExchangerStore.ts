@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
 import { ICurrency, IEstimatedAmount } from "../types/currency.types";
 import { getAllCurrencies } from "../api/getAllCurrencies";
-import { pickFields } from "@/shared/utils/pickFields";
-import { checkInclusiveStrings } from "@/shared/utils/checkInclusiveStrings";
+import { pickFields } from "@/shared/utils/pickFields/pickFields";
+import { checkInclusiveStrings } from "@/shared/utils/checkInclusiveStrings/checkInclusiveStrings";
 import { getMinimalAmount } from "../api/getMinimalAmount";
 import { getEstimatedAmount } from "../api/getEstimatedAmount";
-import { debounce } from "@/shared/utils/debounce";
+import { debounce } from "@/shared/utils/debounce/debounce";
 
 export interface ISelectedCurrency {
   value: string;

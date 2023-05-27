@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { importEnvWithError } from "../utils/importEnvWithError";
+import { importEnvWithError } from "../utils/importEnvWithError/importEnvWithError";
 import { useToast } from "vue-toastification";
 
 interface ICreator {

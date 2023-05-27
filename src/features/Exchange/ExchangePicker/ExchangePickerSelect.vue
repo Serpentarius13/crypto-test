@@ -27,7 +27,7 @@ import { ICurrency } from "../types/currency.types";
 import { useVirtualList } from "@vueuse/core";
 import { watchEffect } from "vue";
 import { computed } from "@vue/reactivity";
-import { checkInclusiveStrings } from "@/shared/utils/checkInclusiveStrings";
+import { checkInclusiveStrings } from "@/shared/utils/checkInclusiveStrings/checkInclusiveStrings.js";
 
 const props = defineProps<{ currencies: ICurrency[]; searchValue: string }>();
 

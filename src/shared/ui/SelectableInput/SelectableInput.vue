@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { sleep } from "@/shared/utils/sleep";
+import { sleep } from "@/shared/utils/sleep/sleep.js";
 import BaseIcon from "../Icon/BaseIcon.vue";
 
 const props = defineProps<{ isOpened: boolean; value: string }>();
