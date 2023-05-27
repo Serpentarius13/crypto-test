@@ -35,12 +35,11 @@ export function createAxiosInstance({
       return resp;
     },
     (err) => {
-      const errorMsg = err.response.data?.error;
+      const errorResp = err.response.data;
 
-  
-      if (!disabledErrors.includes(errorMsg)) {
+      if (!disabledErrors.includes(errorResp?.error)) {
         const toast = useToast();
-        toast.error(errorMsg);
+        toast.error(errorResp?.message);
       }
 
       return Promise.reject(err);
