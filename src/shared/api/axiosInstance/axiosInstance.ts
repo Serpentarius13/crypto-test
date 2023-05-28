@@ -39,7 +39,9 @@ export function createAxiosInstance({
 
       if (!disabledErrors.includes(errorResp?.error)) {
         const toast = useToast();
-        toast.error(errorResp?.message);
+        toast.error(
+          errorResp?.message ?? `There was an error ${errorResp?.error}`
+        );
       }
 
       return Promise.reject(err);
