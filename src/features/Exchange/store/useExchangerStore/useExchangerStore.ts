@@ -79,6 +79,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
      * @param currency Валюта
      */
     setLeftCurrency(currency: ICurrency) {
+      this.clearError();
       // Проверяем, другая ли это валюта
       if (this.rightCurrency.currency === currency) {
         // Если нет, ищем другую
@@ -106,6 +107,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
      * @param currency Валюта
      */
     setRightCurrency(currency: ICurrency) {
+      this.clearError();
       // Проверяем, другая ли это валюта
       if (this.leftCurrency.currency === currency) {
         // Если нет, ищем другую
@@ -211,7 +213,6 @@ export const useExchangerStore = defineStore("exchanger-store", {
      */
     async getEstimateLeft() {
       try {
-        this.clearError();
         this.load();
         // Получаем текущие валюты
         const [left, right] = this.getCurrenciesSide();
@@ -239,7 +240,6 @@ export const useExchangerStore = defineStore("exchanger-store", {
      */
     async getEstimateRight() {
       try {
-        this.clearError();
         this.load();
         // Получаем текущие валюты
         const [left, right] = this.getCurrenciesSide();

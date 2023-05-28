@@ -136,7 +136,7 @@ export const restHandlers = [
   ),
 
   rest.get(
-    `https://api.changenow.io/v1/min-amount/btc_eth?api_key=52da871cb5197290b2309005563be0685100b33fe986056fd1177899d7c814cb`,
+    `https://api.changenow.io/v1/min-amount/btc_eth/?api_key=52da871cb5197290b2309005563be0685100b33fe986056fd1177899d7c814cb`,
     (_, res, ctx) => {
       return res(
         ctx.status(200),
@@ -148,7 +148,7 @@ export const restHandlers = [
   ),
 
   rest.get(
-    `https://api.changenow.io/v1/min-amount/eth_btc?api_key=52da871cb5197290b2309005563be0685100b33fe986056fd1177899d7c814cb`,
+    `https://api.changenow.io/v1/min-amount/eth_btc/?api_key=52da871cb5197290b2309005563be0685100b33fe986056fd1177899d7c814cb`,
     (_, res, ctx) => {
       return res(
         ctx.status(200),
