@@ -1,10 +1,10 @@
 <template>
   <div
-    class="padding-small borderline-gray xs:max-w-screen relative grid w-full grid-cols-[0.67fr_0.33fr] rounded-very-small xs:flex"
+    class="padding-small borderline-gray xs:max-w-screen xs:max-w-screen relative flex w-full justify-between rounded-very-small"
     v-click-away="handleClickAway"
   >
     <input
-      class="numeric max-w-full border-r-[1px] border-r-white-gray focus:outline-none"
+      class="numeric w-full border-r-[1px] border-r-white-gray focus:outline-none"
       @input="handleInputEvent"
       :value="value"
       v-if="!isOpened"
