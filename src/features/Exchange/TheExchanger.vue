@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import ExchangePicker from "@/features/Exchange/ExchangePicker/ExchangePicker.vue";
-import ExchangePickerBtn from "@/features/Exchange/ExchangePicker/ExchangePickerBtn.vue";
+import ExchangePicker from "./ExchangePicker/ExchangePicker.vue";
+import ExchangePickerBtn from "./ExchangePicker/ExchangePickerBtn.vue";
 import { useExchangerStore } from "./store/useExchangerStore/useExchangerStore.js";
 import { onMounted } from "vue";
 

@@ -3,10 +3,9 @@ import { useExchangerStore } from "./useExchangerStore";
 
 import { setupServer } from "msw/node";
 import { rest } from "msw";
-import { importEnvWithError } from "@/shared/utils/importEnvWithError/importEnvWithError";
+
 import { IEstimatedAmount, IFullCurrency } from "../../types/currency.types";
 import { pickFields } from "@/shared/utils/pickFields/pickFields";
-import { axiosV1Key } from "@/shared/api/axiosInstance/axiosInstance";
 
 const currencies: IFullCurrency[] = [
   {
