@@ -1,11 +1,10 @@
 <template>
-  <label class="flex flex-col gap-[0.8rem] w-full borderline-gray">
+  <label class="flex w-full flex-col gap-[0.8rem]">
     <span> {{ label }} </span>
     <input
       v-model="model"
       v-bind="props"
-      class="w-full padding-small rounded-very-small"
-      
+      class="padding-small borderline-gray w-full rounded-very-small"
     />
   </label>
 </template>
