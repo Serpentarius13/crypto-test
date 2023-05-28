@@ -1,10 +1,13 @@
 <template>
-  <div class="h-[14.4rem] overflow-y-auto z-[20] relative" v-bind="containerProps">
+  <div
+    class="relative z-[20] h-[14.4rem] overflow-y-auto"
+    v-bind="containerProps"
+  >
     <ul class="z-[20] flex w-full flex-col" v-bind="wrapperProps">
       <li v-for="{ data, index } in list" :key="index">
         <button
           @click="emit('select', data)"
-          class="padding-small flex w-full items-center gap-[1.2rem] bg-white hover:bg-white-grayish"
+          class="padding-small flex items-center gap-[1.2rem] bg-white hover:bg-white-grayish  w-full  "
           :style="{ height: '4.8rem' }"
         >
           <CurrencyLogo
@@ -12,7 +15,7 @@
             :image="data.image"
             :ticker="data.ticker"
           />
-          <span class="blueish-gray">
+          <span class="blueish-gray whitespace-nowrap text-ellipsis overflow-clip">
             {{ data.name }}
           </span>
         </button>
@@ -25,7 +28,7 @@
 import CurrencyLogo from "@/shared/ui/CurrencyLogo/CurrencyLogo.vue";
 import { ICurrency } from "../types/currency.types";
 import { useVirtualList } from "@vueuse/core";
-import { watchEffect } from "vue";
+
 import { computed } from "@vue/reactivity";
 import { checkInclusiveStrings } from "@/shared/utils/checkInclusiveStrings/checkInclusiveStrings.js";
 

@@ -1,12 +1,12 @@
 <template>
-  <figure class="flex items-center gap-[1.4rem] overflow-x-hidden">
+  <figure class="flex items-center gap-[1.4rem]">
     <img
       :alt="`Logo of ${name}`"
       :src="image"
       class="aspect-square max-w-[2rem]"
     />
 
-    <span class="text-ellipsis whitespace-nowrap uppercase">
+    <span class="uppercase">
       {{ ticker }}
     </span>
   </figure>

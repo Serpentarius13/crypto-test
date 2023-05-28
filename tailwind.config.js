@@ -30,6 +30,8 @@ export default {
       // => @media (max-width: 767px) { ... }
 
       sm: { max: "639px" },
+
+      xs: { max: "400px" },
       // => @media (max-width: 639px) { ... }
     },
   },

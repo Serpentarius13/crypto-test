@@ -1,10 +1,10 @@
 <template>
   <div
-    class="padding-small borderline-gray relative grid w-full grid-cols-[1fr_0.33fr] rounded-very-small"
+    class="padding-small borderline-gray xs:max-w-screen relative grid w-full grid-cols-[0.67fr_0.33fr] rounded-very-small xs:flex"
     v-click-away="handleClickAway"
   >
     <input
-      class="numeric border-r-[1px] border-r-white-gray focus:outline-none"
+      class="numeric max-w-full border-r-[1px] border-r-white-gray focus:outline-none"
       @input="handleInputEvent"
       :value="value"
       v-if="!isOpened"
@@ -19,7 +19,7 @@
     />
 
     <button
-      class="flex items-center gap-[3.3rem] justify-self-end"
+      class="flex items-center gap-[3.3rem] justify-self-end md:gap-[1rem]"
       @click="emit('open')"
       data-test="opener"
     >
@@ -81,5 +81,19 @@ onUnmounted(() => {
   }
 
   @apply appearance-none;
+}
+
+input[type="search"]::-ms-clear {
+  @apply hidden h-0 w-0;
+}
+input[type="search"]::-ms-reveal {
+  @apply hidden h-0 w-0;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  @apply hidden;
 }
 </style>
