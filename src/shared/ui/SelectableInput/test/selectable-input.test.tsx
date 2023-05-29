@@ -28,7 +28,7 @@ describe("selectable input", () => {
 
     await new Promise((r) => setTimeout(r, 150));
 
-    const crossIcon = wrapper.find('[id="cross"]');
+    const crossIcon = wrapper.find('[data-test="cross"]');
 
     expect(crossIcon.exists()).toBe(true);
   });
@@ -53,6 +53,12 @@ describe("selectable input", () => {
     const menu = wrapper.find('[class="menu"]');
 
     expect(menu.exists()).toBe(false);
+
+    await new Promise((r) => setTimeout(r, 150));
+
+    const arrow = wrapper.find('[data-test="arrow"]');
+
+    expect(arrow.exists()).toBe(true);
   });
 
   it("updates values", async () => {

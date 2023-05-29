@@ -25,8 +25,14 @@
     >
       <slot name="button" />
 
-      <BaseIcon name="cross" v-show="isOpened" key="1" id="cross" />
-      <BaseIcon name="arrow-down" v-show="!isOpened" key="2" id="arrow" />
+      <BaseIcon name="cross" v-show="isOpened" key="1" data-test="cross" />
+
+      <BaseIcon
+        name="arrow-down"
+        v-show="!isOpened"
+        key="2"
+        data-test="arrow"
+      />
     </button>
 
     <div class="absolute left-0 top-full w-full" v-if="isOpened">
