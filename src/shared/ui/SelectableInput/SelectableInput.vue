@@ -10,9 +10,11 @@
       v-if="!isOpened"
       type="number"
       min="0"
+      placeholder="-"
     />
     <input
-      class="w-full focus:outline-none"
+      class="text-small w-full placeholder:text-blueish-gray focus:outline-none"
+      placeholder="Search"
       type="search"
       v-model="searchModel"
       v-else

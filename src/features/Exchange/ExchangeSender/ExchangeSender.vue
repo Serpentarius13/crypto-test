@@ -12,7 +12,7 @@
       <Transition name="fade">
         <strong
           class="text-small absolute top-full w-full text-center text-red"
-          v-if="store.isMinimalBreached"
+          v-if="store.isMinimalBreached && !store.isLoading"
         >
           This pair is disabled now
         </strong>

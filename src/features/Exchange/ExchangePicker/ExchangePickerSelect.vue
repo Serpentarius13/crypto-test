@@ -15,7 +15,7 @@
             :image="data.image"
             :ticker="data.ticker"
           />
-          <span class="blueish-gray whitespace-nowrap text-ellipsis overflow-clip">
+          <span class="text-blueish-gray whitespace-nowrap text-ellipsis overflow-clip">
             {{ data.name }}
           </span>
         </button>

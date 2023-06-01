@@ -6,6 +6,7 @@ import { pickFields } from "@/shared/utils/pickFields/pickFields";
 import { getMinimalAmount } from "../../api/getMinimalAmount";
 
 import { getEstimatedAmount } from "../../api/getEstimatedAmount";
+import { sleep } from "@/shared/utils/sleep/sleep";
 
 export interface ISelectedCurrency {
   value: string;
@@ -96,7 +97,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
         // Гетаем минималку
         this.getMinimal().then(() => {
           // И также гетаем эстимейт если у нас уже есть вторая валюта
-          this.rightCurrency.value && this.getEstimateRight();
+          if (this.rightCurrency) this.getEstimateRight();
         });
       }
     },
@@ -124,7 +125,8 @@ export const useExchangerStore = defineStore("exchanger-store", {
         // Гетаем минималку
         this.getMinimal().then(() => {
           // И также гетаем эстимейт если у нас уже есть вторая валюта
-          this.leftCurrency.value && this.getEstimateLeft();
+
+          if (this.leftCurrency) this.getEstimateLeft();
         });
       }
     },
@@ -144,8 +146,16 @@ export const useExchangerStore = defineStore("exchanger-store", {
       // Если значение равняется пустой строек либо нулю, обнуляем также значение другого инпута и возвращаем
       if (value === "" || value === "0") return (this.rightCurrency.value = "");
 
+      if (parseFloat(value) < this.minimalAmount.fromLeft) {
+        this.setError("Minimal breached");
+        this.rightCurrency.value = "";
+        return;
+      }
+
+      this.clearError();
+
       // Гетаем эстимейт
-      if (+value > this.minimalAmount.fromLeft) this.getEstimateRight();
+      this.getEstimateRight();
     },
 
     /**
@@ -154,6 +164,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
      * @param value Значение инпута
      */
     handleUpdateRightCurrency(value: string) {
+      console.log(typeof parseFloat(value) === "number");
       // Проверяем, является ли значение инпута числом, если нет заканчиваем функцию
       if (typeof parseFloat(value) !== "number") return;
 
@@ -163,19 +174,27 @@ export const useExchangerStore = defineStore("exchanger-store", {
       // Если значение равняется пустой строек либо нулю, обнуляем также значение другого инпута и возвращаем
       if (value === "" || value === "0") return (this.leftCurrency.value = "");
 
+      if (parseFloat(value) < this.minimalAmount.fromRight) {
+        console.log(value, "here");
+        this.setError("Minimal breached");
+        this.leftCurrency.value = "";
+        return;
+      }
+      this.clearError();
+
       // Гетаем эстимейт
-      if (+value > this.minimalAmount.fromRight) this.getEstimateLeft();
+      this.getEstimateLeft();
     },
 
     /**
      * Меняет валюты местами и обновляет минималку
      */
     switchCurrencies() {
-      // Меняем местами с помощью деструктуризации массива
-      [this.rightCurrency, this.leftCurrency] = [
-        this.leftCurrency,
+      [
+        // Меняем местами с помощью деструктуризации массива
         this.rightCurrency,
-      ];
+        this.leftCurrency,
+      ] = [this.leftCurrency, this.rightCurrency];
 
       // Обновляем минималку
       this.getMinimal();
@@ -196,13 +215,13 @@ export const useExchangerStore = defineStore("exchanger-store", {
           getMinimalAmount(right.currency, left.currency),
         ]);
 
-        // Обновляем минималки
         this.minimalAmount.fromLeft = minLeft;
         this.minimalAmount.fromRight = minRight;
 
-        this.unload();
+        this.leftCurrency.value = minLeft;
+        this.rightCurrency.value = minRight;
       } catch (error: Error | any) {
-        this.warning = error.message;
+        this.setError(error.message);
       } finally {
         this.unload();
       }
@@ -213,6 +232,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
      */
     async getEstimateLeft() {
       try {
+        this.clearError();
         this.load();
         // Получаем текущие валюты
         const [left, right] = this.getCurrenciesSide();
@@ -224,12 +244,12 @@ export const useExchangerStore = defineStore("exchanger-store", {
           left.currency
         );
         // Выставляем ошибку
-        this.warning = estimate.warningMessage;
+        this.setError(estimate.warningMessage);
 
         // Выставляем эстимейт
         this.leftCurrency.value = estimate.estimatedAmount.toString();
       } catch (error) {
-        this.warning = "Some error occured";
+        this.setError("Some error occured");
       } finally {
         this.unload();
       }
@@ -240,6 +260,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
      */
     async getEstimateRight() {
       try {
+        this.clearError();
         this.load();
         // Получаем текущие валюты
         const [left, right] = this.getCurrenciesSide();
@@ -252,12 +273,12 @@ export const useExchangerStore = defineStore("exchanger-store", {
         );
 
         // Выставляем ошибку
-        this.warning = estimate.warningMessage;
+        this.setError(estimate.warningMessage);
 
         // Выставляем эстимейт
         this.rightCurrency.value = estimate.estimatedAmount.toString();
       } catch (error) {
-        this.warning = "Some error occured";
+        this.setError("Some error occured");
       } finally {
         this.unload();
       }
@@ -293,6 +314,10 @@ export const useExchangerStore = defineStore("exchanger-store", {
     clearError() {
       this.warning = null;
     },
+
+    setError(message: string | null) {
+      this.warning = message;
+    },
   },
   getters: {
     // Возможные валюты для левого селекта
@@ -312,6 +337,7 @@ export const useExchangerStore = defineStore("exchanger-store", {
     // Проверяет, нарушены ли границы минимальных значений
     isMinimalBreached(state): boolean {
       // Если есть ошибка, границы нарушены
+
       if (this.warning) return true;
 
       // Границы левой минималки

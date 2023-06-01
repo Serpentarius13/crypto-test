@@ -17,7 +17,7 @@ interface ITextInput {
 }
 
 const props = defineProps<Partial<ITextInput>>();
-const model = defineModel();
+const model = defineModel<string>({required: true});
 </script>
 
 <style scoped lang="scss"></style>

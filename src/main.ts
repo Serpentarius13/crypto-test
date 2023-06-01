@@ -10,7 +10,9 @@ import "vue-toastification/dist/index.css";
 import { createPinia } from "pinia";
 import { PiniaLogger } from "pinia-logger";
 
+
 import VueClickAway from "vue3-click-away";
+import { debounce } from "./shared/utils/debounce/debounce";
 
 const app = createApp(App);
 
@@ -31,6 +33,7 @@ pinia.use(
     disabled: import.meta.env.PROD,
   })
 );
+
 
 app.use(pinia);
 

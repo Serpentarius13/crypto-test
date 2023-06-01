@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import ExchangeSender from "@/features/Exchange/ExchangeSender/ExchangeSender.vue";
 import TheExchanger from "@/features/Exchange/TheExchanger.vue";
+import { onMounted } from "vue";
 </script>
 
 <style scoped lang="scss"></style>
