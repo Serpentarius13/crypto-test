@@ -3,7 +3,7 @@
     v-model:search="searchValue"
     @open="isSelectOpened = !isSelectOpened"
     @input="handleInput"
-    :value="selectedCurrency.value"
+    :value="formatCurrencyValue(selectedCurrency)"
     :is-opened="isSelectOpened"
   >
     <template #button>
@@ -12,6 +12,7 @@
         :image="selectedCurrency.currency.image"
         :ticker="selectedCurrency.currency.ticker"
         v-if="selectedCurrency.currency"
+        class="pl-[3.65rem]"
       />
     </template>
 
@@ -37,6 +38,7 @@ import { ref } from "vue";
 
 import ExchangePickerSelect from "./ExchangePickerSelect.vue";
 import { ISelectedCurrency } from "../store/useExchangerStore/useExchangerStore.js";
+import { formatCurrencyValue } from "../utils/formatCurrencyValue";
 
 interface IExchangePicker {
   selectedCurrency: ISelectedCurrency;

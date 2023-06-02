@@ -14,6 +14,7 @@ export default {
         "white-gray": "#E3EBEF",
         "white-grayish": " #EAF1F7",
         "blueish-gray": "#80A2B6",
+        'blueish-gray-light': '#C1D9E5'
       },
     },
     screens: {

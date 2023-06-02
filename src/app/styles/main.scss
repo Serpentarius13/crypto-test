@@ -9,11 +9,7 @@
 @import "./utilities/animations.scss";
 
 body {
-  width: 100vw;
-  min-height: 100vh;
-
-  overflow-x: hidden;
-  @apply text-small text-black;
+  @apply text-small min-h-screen w-screen overflow-x-hidden text-black;
 }
 
 html {
@@ -22,7 +18,5 @@ html {
 }
 
 button {
-  border: none;
-  background: none;
-  outline: none;
+  @apply border-none bg-none outline-none;
 }

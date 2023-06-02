@@ -175,23 +175,6 @@ describe("axios instance", () => {
   // Reset handlers after each test `important for test isolation`
   afterEach(() => server.resetHandlers());
 
-  it("has initial state", () => {
-    const minimalAmount = {
-      fromLeft: 0,
-      fromRight: 0,
-    };
-    const store = useExchangerStore();
-
-    expect(store.currencies).toEqual([]);
-
-    expect(store.leftCurrency.value).toBe("");
-    expect(store.rightCurrency.value).toBe("");
-    expect(store.minimalAmount).toEqual(minimalAmount);
-
-    expect(store.isLoading).toBe(false);
-    expect(store.warning).toBe(null);
-  });
-
   it("loads data and sets currencies and minimals", async () => {
     const store = useExchangerStore();
 

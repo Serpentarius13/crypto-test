@@ -1,43 +1,49 @@
 <template>
   <div
-    class="padding-small borderline-gray xs:max-w-screen xs:max-w-screen relative flex w-full justify-between rounded-very-small"
+    class="xs:max-w-screen xs:max-w-screen relative flex w-full justify-between rounded-very-small"
     v-click-away="handleClickAway"
   >
-    <input
-      class="numeric w-full border-r-[1px] border-r-white-gray focus:outline-none"
-      @input="handleInputEvent"
-      :value="value"
-      v-if="!isOpened"
-      type="number"
-      min="0"
-      placeholder="-"
-    />
-    <input
-      class="text-small w-full placeholder:text-blueish-gray focus:outline-none"
-      placeholder="Search"
-      type="search"
-      v-model="searchModel"
-      v-else
-    />
-
-    <button
-      class="flex items-center gap-[3.3rem] justify-self-end md:gap-[1rem]"
-      @click="emit('open')"
-      data-test="opener"
+    <div
+      :class="[
+        'padding-small relative flex w-full justify-between border-[1px] border-blueish-gray-light pr-[1.1rem] ',
+        isOpened && 'rounded-b-none  border-b-transparent',
+      ]"
     >
-      <slot name="button" />
-
-      <BaseIcon name="cross" v-show="isOpened" key="1" data-test="cross" />
-
-      <BaseIcon
-        name="arrow-down"
-        v-show="!isOpened"
-        key="2"
-        data-test="arrow"
+      <input
+        class="numeric w-full border-r-[1px] border-r-white-gray focus:outline-none"
+        @input="handleInputEvent"
+        :value="value"
+        v-if="!isOpened"
+        type="number"
+        min="0"
+        placeholder="-"
       />
-    </button>
+      <input
+        class="text-small w-full placeholder:text-blueish-gray focus:outline-none"
+        placeholder="Search"
+        type="search"
+        v-model="searchModel"
+        v-else
+      />
 
-    <div class="absolute left-0 top-full w-full" v-if="isOpened">
+      <button
+        class="flex items-center gap-[3.3rem] justify-self-end md:gap-[1rem]"
+        @click="emit('open')"
+        data-test="opener"
+      >
+        <slot name="button" v-if="!isOpened" />
+
+        <BaseIcon name="cross" v-show="isOpened" key="1" data-test="cross" />
+
+        <BaseIcon
+          name="arrow-down"
+          v-show="!isOpened"
+          key="2"
+          data-test="arrow"
+        />
+      </button>
+    </div>
+    <div class="absolute left-0 top-full z-[50] w-full" v-if="isOpened">
       <slot name="menu" />
     </div>
   </div>
@@ -56,7 +62,7 @@ const searchModel = defineModel<string>("search", { required: true });
 const emit = defineEmits<{ open: []; input: [value: string] }>();
 
 function handleClickAway() {
-  sleep(1).then(() => props.isOpened && emit("open"));
+  props.isOpened && emit("open");
 }
 
 function handleClose(e: KeyboardEvent) {

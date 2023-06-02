@@ -1,13 +1,13 @@
 <template>
   <div
-    class="relative z-[20] h-[14.4rem] overflow-y-auto"
+    class="relative max-h-[14.4rem] w-full overflow-y-auto rounded-b-very-small border-[1px] border-blueish-gray-light !border-t-white-gray bg-white"
     v-bind="containerProps"
   >
-    <ul class="z-[20] flex w-full flex-col" v-bind="wrapperProps">
+    <ul class="flex w-full flex-col" v-bind="wrapperProps">
       <li v-for="{ data, index } in list" :key="index">
         <button
           @click="emit('select', data)"
-          class="padding-small flex items-center gap-[1.2rem] bg-white hover:bg-white-grayish  w-full  "
+          class="padding-small flex w-full items-center gap-[1.2rem] bg-white hover:bg-white-grayish"
           :style="{ height: '4.8rem' }"
         >
           <CurrencyLogo
@@ -15,7 +15,9 @@
             :image="data.image"
             :ticker="data.ticker"
           />
-          <span class="text-blueish-gray whitespace-nowrap text-ellipsis overflow-clip">
+          <span
+            class="overflow-clip text-ellipsis whitespace-nowrap text-blueish-gray"
+          >
             {{ data.name }}
           </span>
         </button>
